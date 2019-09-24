@@ -58,7 +58,7 @@ var startClock;
 // Create a function to start the game.
 function startGame() {
     $("#timer").html(
-        "<p>" + "You have one minute to guess the following movies based on quotes.  To begin, press the start button.  Good luck!" + "</p>" +
+        "<p>" + "You have one minute to guess the following movies based on their quotes.  To begin, press the start button.  Good luck!" + "</p>" +
         "<button class='btn- btn-outline-pink btn-lg'>" + "START" + "</button>");
 
     correctAnswers = 0;
@@ -70,10 +70,7 @@ function startGame() {
 }
 
 function countdown() {
-
-    // Set the clock to count down decrementing by one second at a time.
-    startClock = setInterval(countdown, 1000);
-
+    
     if (seconds > 0) {
         seconds--;
         $("#timer").html("<h2>" + "Time Remaining: " + seconds + "</h2>");
@@ -101,6 +98,10 @@ function trivia() {
 
 // Create a function to start the countdown and display the game contents.
 function trigger() {
+
+    // Set the clock to count down decrementing by one second at a time.
+    startClock = setInterval(countdown, 1000);
+
     countdown();
     trivia();
 }
