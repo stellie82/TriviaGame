@@ -9,11 +9,10 @@ body {
     opacity: .65;
 }
 
-.navbar {
+header {
+    padding: 20px;
+    text-align: center;
     background-image: url(../images/purple.jpg);
-}
-
-#navbar-brand {
     color: #d520db;
     font-family: 'Audiowide';
     font-size: 48px;
@@ -24,15 +23,16 @@ body {
     text-align: center;
 }
 
-.btn-space {
-    margin: 15px;
-}
-
-.btn-outline-pink {
+.btn-sm {
+    margin: 0 15px;
+    border-color: #d520db;
     color: #d520db;
+    font-weight: bold;
 }
 
-.btn- {
+.btn-lg {
+    border-color: #d520db;
+    color: #d520db;
     font-weight: bold;
 }
 

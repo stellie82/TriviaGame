@@ -59,7 +59,7 @@ var startClock;
 function startGame() {
     $("#timer").html(
         "<p>" + "You have one minute to guess the following movies based on their quotes.  To begin, press the start button.  Good luck!" + "</p>" +
-        "<button class='btn- btn-outline-pink btn-lg'>" + "START" + "</button>");
+        "<button class='btn-lg'>" + "START" + "</button>");
 
     correctAnswers = 0;
     wrongAnswers = 0;
@@ -86,11 +86,28 @@ function trivia() {
         $("#content").append("<div id='Quote'>" + movieList[i].quote + "</div>");
 
         $.each(movieList[i].choices, function (index, key) {
-            $('#content').append($("<button class='btn- btn-outline-pink btn-sm btn-space'>" + key + "</button>"));
+            $('#content').append($("<button class='btn-sm'>" + key + "</button>"));
+            // $('#content').append($("<button class='btn- btn-outline-pink btn-sm btn-space'>" + key + "</button>"));
         })
+
+        if (movieList[i].answer === "") {
+            unanswered++;
+        }
+    
+        else if (movieList[i].choices === movieList[i].answer) {
+            correctAnswers++;
+        }
+    
+        else if (movieList[i].choices != movieList[i].answer) {
+            wrongAnswers++;
+        }
 
         $("#content").append("<br></br>");
     }
+
+    console.log(unanswered);
+    console.log(correctAnswers);
+    console.log(wrongAnswers);
 }
 
 // Create a function to start the countdown and display the game contents.
