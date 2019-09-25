@@ -81,10 +81,7 @@ function countdown() {
 
 function trivia() {
     for (i = 0; i < movieList.length; i++) {
-        console.log(i + 1);
-        console.log(movieList[i].quote);
-        console.log(movieList[i].choices);
-
+        
         // Create divs for each of the quotes and answer choices.
         $("#content").append("<div id='Quote'>" + movieList[i].quote + "</div>");
 

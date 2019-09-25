@@ -9,6 +9,10 @@ body {
     opacity: .65;
 }
 
+.navbar {
+    background-image: url(../images/purple.jpg);
+}
+
 #navbar-brand {
     color: #d520db;
     font-family: 'Audiowide';
