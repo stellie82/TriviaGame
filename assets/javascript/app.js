@@ -54,6 +54,7 @@ var wrongAnswers;
 var unanswered;
 var seconds = 10;
 var startClock;
+var checked = false;
 
 // Create a function to start the game.
 function startGame() {
@@ -70,7 +71,7 @@ function startGame() {
 }
 
 function countdown() {
-    
+
     if (seconds > 0) {
         seconds--;
         $("#timer").html("<h2>" + "Time Remaining: " + seconds + "</h2>");
@@ -90,17 +91,21 @@ function trivia() {
             // $('#content').append($("<button class='btn- btn-outline-pink btn-sm btn-space'>" + key + "</button>"));
         })
 
-        if (movieList[i].answer === "") {
-            unanswered++;
+        if (movieList[i].answer.checked) {
+            checked = true;
         }
+
+        // if (movieList[i].answer === "") {
+        //     unanswered++;
+        // }
     
-        else if (movieList[i].choices === movieList[i].answer) {
-            correctAnswers++;
-        }
+        // else if (movieList[i].choices === movieList[i].answer) {
+        //     correctAnswers++;
+        // }
     
-        else if (movieList[i].choices != movieList[i].answer) {
-            wrongAnswers++;
-        }
+        // else if (movieList[i].choices != movieList[i].answer) {
+        //     wrongAnswers++;
+        // }
 
         $("#content").append("<br></br>");
     }

@@ -30,9 +30,24 @@ header {
     font-weight: bold;
 }
 
+.btn-sm:focus, .btn-sm:hover {
+    margin: 0 15px;
+    border-color: #d520db;
+    background-color: #d520db;
+    color: white;
+    font-weight: bold;
+}
+
 .btn-lg {
     border-color: #d520db;
     color: #d520db;
+    font-weight: bold;
+}
+
+.btn-lg:hover {
+    border-color: #d520db;
+    background-color: #d520db;
+    color: white;
     font-weight: bold;
 }
 
