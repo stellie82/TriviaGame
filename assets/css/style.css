@@ -30,7 +30,7 @@ header {
     font-weight: bold;
 }
 
-.btn-sm:focus, .btn-sm:hover {
+.btn-sm:hover, .highlight {
     margin: 0 15px;
     border-color: #d520db;
     background-color: #d520db;
