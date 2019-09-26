@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+    height: 100%;
+    background-image: url(../images/retro.jpg);
+}
+
+.container {
+    background-color: #e4e7ee;
+    opacity: .65;
+}
+
+header {
+    padding: 20px;
+    text-align: center;
+    background-image: url(../images/purple.jpg);
+    color: #d520db;
+    font-family: 'Audiowide';
+    font-size: 48px;
+}
+
+#timer {
+    padding: 30px 0 0 0;
+    text-align: center;
+}
+
+.btn-sm {
+    margin: 0 15px;
+    border-color: #d520db;
+    color: #d520db;
+    font-weight: bold;
+}
+
+.btn-sm:hover, .highlight {
+    margin: 0 15px;
+    border-color: #d520db;
+    background-color: #d520db;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-lg {
+    border-color: #d520db;
+    color: #d520db;
+    font-weight: bold;
+}
+
+.btn-lg:hover {
+    border-color: #d520db;
+    background-color: #d520db;
+    color: white;
+    font-weight: bold;
+}
+
+#content {
+    padding: 30px;
+    font-family: 'Jura';
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+h2 {
+    color: #d520db;
+    font-family: 'Audiowide';
+    font-weight: bold;
+}
+
+p {
+    color: black;
+    font-family: 'Jura';
+    font-size: 18px;
+}

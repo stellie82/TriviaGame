@@ -1,78 +1,128 @@
-$("document").ready(function () {
-});
-
 // Set global variables for the game.
 var movieList = [{
-    question = "",
-    choices =[""],
-    answer = "Back to the Future",
+    quote: "Wait a minute Doc.  Uh, are you telling me you built a time machine... out of a DeLorean?",
+    choices: ["Apollo 13", "Back to the Future", "Flight of the Navigator", "Alien"],
+    answer: "Back to the Future",
 }, {
-    question = "",
-    choices =[""],
-    answer = "Top Gun",
+    quote: "You can be my wingman any time.",
+    choices: ["Superman", "Call of the Wild", "Wild Wild West", "Top Gun"],
+    answer: "Top Gun",
 }, {
-    question = "",
-    choices =[""],
-    answer = "E.T.",
+    quote: "Here's Johnny!",
+    choices: ["The Shining", "Short Circuit", "The Incredibles", "Weird Science"],
+    answer: "The Shining",
 }, {
-    question = "",
-    choices =[""],
-    answer = "Princess Bride",
+    quote: "Hello.  My name is Inigo Montoya.  You killed my father.  Prepare to die!",
+    choices: ["The Princess Bride", "The Three Musketeers", "The Rocketeer", "Nacho Libre"],
+    answer: "The Princess Bride",
 }, {
-    question = "",
-    choices =[""],
-    answer = "The Terminator",
+    quote: "Come with me if you want to live.",
+    choices: ["Bill & Ted's Excellent Adventure", "Stand By Me", "The Terminator", "Robocop"],
+    answer: "The Terminator",
 }, {
-    question = "",
-    choices =[""],
-    answer =  "The Karate Kid",
+    quote: "No such thing as bad student, only bad teacher.  Teacher say, student do.",
+    choices: ["Good Will Hunting", "Lean on Me", "Shawshank Redemption", "The Karate Kid"],
+    answer: "The Karate Kid",
 }, {
-    question = "",
-    choices =[""],
-    answer = "Beetlejuice",
+    quote: "Go ahead, make my millennium.",
+    choices: ["Sudden Impact", "Beetlejuice", "Raiders of the Lost Ark", "The Abyss"],
+    answer: "Beetlejuice",
 }, {
-    question = "",
-    choices =[""],
-    answer = "Coming to America",
+    quote: "I just want to tell you both good luck. We're all counting on you.",
+    choices: ["Airplane!", "Avatar", "Titanic", "The Goonies"],
+    answer: "Airplane!",
 }, {
-    question = "",
-    choices =[""],
-    answer = "Batman",
+    quote: "You wanna get nuts?  Cmon, let's get nuts!",
+    choices: ["Honey I Shrunk the Kids", "Roger Rabbit", "Batman", "Scarface"],
+    answer: "Batman",
 }, {
-    question = "",
-    choices =[""],
-    answer = "The Neverending Story",
+    quote: "How many wishes do I get?  As many as you want. And the more wishes you make, the more magnificent Fantasia will become.",
+    choices: ["The Land Before Time", "The Little Mermaid", "Fantasia", "The Neverending Story"],
+    answer: "The Neverending Story",
 }, {
-    question = "",
-    choices =[""],
-    answer = "Ghostbusters",
+    quote: "Ray, when someone asks you if you're a god, you say YES!",
+    choices: ["Ghostbusters", "Bruce Almighty", "The Fly", "Predator"],
+    answer: "Ghostbusters",
 }, {
-    question = "",
-    choices =[""],
-    answer = "Labryinth",
+    quote: "Just fear me, love me, do as I say, and I will be your slave.",
+    choices: ["Poltergeist", "Labryinth", "Willow", "Gladiator"],
+    answer: "Labryinth",
 }];
 
 var correctAnswers;
 var wrongAnswers;
 var unanswered;
+var userAnswers = [];
+var seconds = 10;
+var startClock;
+var checked = false;
 
 // Create a function to start the game.
 function startGame() {
+    $("#timer").html(
+        "<p>" + "You have one minute to guess the following movies based on their quotes.  To begin, press the start button.  Good luck!" + "</p>" +
+        "<button class='btn-lg'>" + "START" + "</button>");
 
     correctAnswers = 0;
     wrongAnswers = 0;
     unanswered = 0;
 
-    var countdown = setInterval(function () {
-        alert("Hello");
-    }, 1000);
-
+    // Create a trigger to start the timer as soon as the player clicks the start button.
+    $("#timer").on("click", trigger);
 }
 
-// Create a function to clear the timer.
-function stop() {
-    clearInterval(intervalId);
+function countdown() {
+
+    if (seconds > 0) {
+        seconds--;
+        $("#timer").html("<h2>" + "Time Remaining: " + seconds + "</h2>");
+    }
+
+    else stop();
 }
 
-startGame();
+function trivia() {
+    for (i = 0; i < movieList.length; i++) {
 
+        // Create divs for each of the quotes and answer choices.
+        $("#content").append("<div id='Quote-" + (i + 1) + "'>" + movieList[i].quote + "</div>");
+
+        $.each(movieList[i].choices, function (index, key) {
+            $('#content').append("<button id='button' data='q" + (i + 1) + "' class='btn-sm q" + (i + 1) + "'>" + key + "</button>");
+        });
+
+        $("#content").append("<br></br>");
+    }
+
+    // Create an onclick function for user selection.
+    $(".btn-sm").on("click", function () {
+        var q = $(this).attr("data");
+        console.log(q);
+        $("." + q).removeClass("highlight");
+        $(this).addClass("highlight");
+    });
+}
+function verifyAnswers() {
+    if ($("#button").hasClass("highlight")) {
+        userAnswers.push($(this).attr("data"));
+        console.log(userAnswers);
+    };
+}
+
+    // Create a function to start the countdown and display the game contents.
+    function trigger() {
+
+        // Set the clock to count down decrementing by one second at a time.
+        startClock = setInterval(countdown, 1000);
+
+        countdown();
+        trivia();
+    }
+
+    // Create a function to clear the timer.
+    function stop() {
+        clearInterval(startClock);
+        verifyAnswers();
+    }
+
+    $("document").ready(startGame);
