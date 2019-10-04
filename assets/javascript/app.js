@@ -61,14 +61,14 @@ var checked = false;
 function startGame() {
     $("#timer").html(
         "<p>" + "You have one minute to guess the following movies based on their quotes.  To begin, press the start button.  Good luck!" + "</p>" +
-        "<button class='btn-lg'>" + "START" + "</button>");
+        "<button class='btn-lg' id='start'>" + "START" + "</button>");
 
     correctAnswers = 0;
     wrongAnswers = 0;
     unanswered = 0;
 
     // Create a trigger to start the timer as soon as the player clicks the start button.
-    $("#timer").on("click", trigger);
+    $("#start").on("click", trigger);
 }
 
 function countdown() {
@@ -85,34 +85,62 @@ function trivia() {
     for (i = 0; i < movieList.length; i++) {
 
         // Create divs for each of the quotes and answer choices.
-        $("#content").append("<div id='Quote-" + (i + 1) + "'>" + movieList[i].quote + "</div>");
+        $("#content").append("<div id='Quote-" + i + "'>" + movieList[i].quote + "</div>");
 
         $.each(movieList[i].choices, function (index, key) {
-            $("#content").append("<button id='button' data='q" + (i + 1) + "' class='btn-sm q" + (i + 1) + "'>" + key + "</button>");
+            $("#content").append("<button id='button' data='q" + i + "' class='btn-sm q" + i + "'>" + key + "</button>");
+
+            for (j = 0; j < movieList[i].choices.length; j++) {
+                if (movieList[i].answer === movieList[i].choices[j]) {
+                    correctAnswers++;
+                    console.log(correctAnswers);
+                    $("button").attr("correct-answer", "Y");
+                }
+
+                else {
+                    $("button").attr("correct-answer", "N");
+                }
+            }
+
         });
 
         $("#content").append("<br></br>");
+
     }
 
     // Create an onclick function for user selection.
     $(".btn-sm").on("click", function () {
-        var q = $(this).attr("data");
-        console.log(q);
+        var selection = $(this).attr("data");
+        console.log(selection);
         $("." + q).removeClass("highlight");
         $(this).addClass("highlight");
     });
 }
 function verifyAnswers() {
 
-    var userInput = document.getElementsByClassName("highlight");
+    // var userInput = document.getElementsByClassName("highlight");
 
-    for (i = 0; i < userInput.length; i++) {
-        if (userInput[i]) {
-            console.log(userInput[i]);
-        };
-    }
+    // for (i = 0; i < userInput.length; i++) {
+    //     if (userInput[i]) {
+    //         console.log(userInput[i]);
+    //     };
+    // }
 
 }
+
+function endGame() {
+
+    $("#timer").empty();
+    $("#content").empty();
+    $("#content").html(
+        "<p>" + "YOUR SCORE" + "</p>" + 
+    "<p>" + "Correct Answers: " + correctAnswers + "</p>" + 
+    "<p>" + "Incorrect Answers: " + wrongAnswers + "</p>" +
+    "<p>" + "Unanswered Questions: " + unanswered + "</p>"  
+
+    );
+};
+
 
 // Create a function to start the countdown and display the game contents.
 function trigger() {
@@ -128,14 +156,9 @@ function trigger() {
 function stop() {
     clearInterval(startClock);
     verifyAnswers();
+    $("#content").append(
+        "<button class='btn-lg' id='done'>" + "DONE" + "</button>");
+    $("#done").on("click", endGame);
 }
 
 $("document").ready(startGame);
-
-// can use $(".highlight").text() to return text in buttons
-// parse by question
-// match to movie list
-
-// count number of question unanswered in each of the questions
-
-// tally up points
