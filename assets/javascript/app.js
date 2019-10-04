@@ -87,25 +87,22 @@ function trivia() {
         // Create divs for each of the quotes and answer choices.
         $("#content").append("<div id='Quote-" + i + "'>" + movieList[i].quote + "</div>");
 
-        $.each(movieList[i].choices, function (index, key) {
-            $("#content").append("<button id='button' data='q" + i + "' class='btn-sm q" + i + "'>" + key + "</button>");
-
-            for (j = 0; j < movieList[i].choices.length; j++) {
-                if (movieList[i].answer === movieList[i].choices[j]) {
-                    correctAnswers++;
-                    console.log(correctAnswers);
-                    $("button").attr("correct-answer", "Y");
-                }
-
-                else {
-                    $("button").attr("correct-answer", "N");
-                }
+        for (j = 0; j < movieList[i].choices.length; j++) {
+            var key = movieList[i].choices[j];
+            var correct;
+            if (movieList[i].choices[j] === movieList[i].answer) {
+                correct = "Y";
             }
 
-        });
+            else {
+                correct = "N";
+            };
+
+            $("#content").append("<button id='button' correct-answer='" + correct + "' data='q" + i + "' class='btn-sm q" + i + "'>" + key + "</button>");
+
+        };
 
         $("#content").append("<br></br>");
-
     }
 
     // Create an onclick function for user selection.
@@ -118,13 +115,16 @@ function trivia() {
 }
 function verifyAnswers() {
 
-    // var userInput = document.getElementsByClassName("highlight");
+    var userChoice = document.getElementsByClassName("highlight");
 
-    // for (i = 0; i < userInput.length; i++) {
-    //     if (userInput[i]) {
-    //         console.log(userInput[i]);
-    //     };
-    // }
+    for (i = 0; i < userChoice.length; i++) {
+        
+        if (userChoice[i]) {
+            console.log(userChoice[i]);
+            userAnswers.push(userChoice[i].innerHTML);
+            console.log(userAnswers);
+        };
+    }
 
 }
 
@@ -133,10 +133,10 @@ function endGame() {
     $("#timer").empty();
     $("#content").empty();
     $("#content").html(
-        "<p>" + "YOUR SCORE" + "</p>" + 
-    "<p>" + "Correct Answers: " + correctAnswers + "</p>" + 
-    "<p>" + "Incorrect Answers: " + wrongAnswers + "</p>" +
-    "<p>" + "Unanswered Questions: " + unanswered + "</p>"  
+        "<p>" + "YOUR SCORE" + "</p>" +
+        "<p>" + "Correct Answers: " + correctAnswers + "</p>" +
+        "<p>" + "Incorrect Answers: " + wrongAnswers + "</p>" +
+        "<p>" + "Unanswered Questions: " + unanswered + "</p>"
 
     );
 };
