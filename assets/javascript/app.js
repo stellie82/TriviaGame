@@ -53,7 +53,7 @@ var correctAnswers;
 var wrongAnswers;
 var unanswered;
 var userAnswers = [];
-var seconds = 10;
+var seconds = 5;
 var startClock;
 var checked = false;
 
@@ -88,7 +88,7 @@ function trivia() {
         $("#content").append("<div id='Quote-" + (i + 1) + "'>" + movieList[i].quote + "</div>");
 
         $.each(movieList[i].choices, function (index, key) {
-            $('#content').append("<button id='button' data='q" + (i + 1) + "' class='btn-sm q" + (i + 1) + "'>" + key + "</button>");
+            $("#content").append("<button id='button' data='q" + (i + 1) + "' class='btn-sm q" + (i + 1) + "'>" + key + "</button>");
         });
 
         $("#content").append("<br></br>");
@@ -103,26 +103,39 @@ function trivia() {
     });
 }
 function verifyAnswers() {
-    if ($("#button").hasClass("highlight")) {
-        userAnswers.push($(this).attr("data"));
-        console.log(userAnswers);
-    };
+
+    var userInput = document.getElementsByClassName("highlight");
+
+    for (i = 0; i < userInput.length; i++) {
+        if (userInput[i]) {
+            console.log(userInput[i]);
+        };
+    }
+
 }
 
-    // Create a function to start the countdown and display the game contents.
-    function trigger() {
+// Create a function to start the countdown and display the game contents.
+function trigger() {
 
-        // Set the clock to count down decrementing by one second at a time.
-        startClock = setInterval(countdown, 1000);
+    // Set the clock to count down decrementing by one second at a time.
+    startClock = setInterval(countdown, 1000);
 
-        countdown();
-        trivia();
-    }
+    countdown();
+    trivia();
+}
 
-    // Create a function to clear the timer.
-    function stop() {
-        clearInterval(startClock);
-        verifyAnswers();
-    }
+// Create a function to clear the timer.
+function stop() {
+    clearInterval(startClock);
+    verifyAnswers();
+}
 
-    $("document").ready(startGame);
+$("document").ready(startGame);
+
+// can use $(".highlight").text() to return text in buttons
+// parse by question
+// match to movie list
+
+// count number of question unanswered in each of the questions
+
+// tally up points
