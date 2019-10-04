@@ -110,8 +110,8 @@ function trivia() {
 
     // Create an onclick function for user selection.
     $(".btn-sm").on("click", function () {
-        var selection = $(this).attr("data");
-        console.log(selection);
+        var q = $(this).attr("data");
+        console.log(q);
         $("." + q).removeClass("highlight");
         $(this).addClass("highlight");
     });
