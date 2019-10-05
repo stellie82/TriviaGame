@@ -52,10 +52,8 @@ var movieList = [{
 var correctAnswers;
 var wrongAnswers;
 var unanswered;
-var userAnswers = [];
-var seconds = 5;
+var seconds = 20;
 var startClock;
-var checked = false;
 
 // Create a function to start the game.
 function startGame() {
@@ -71,6 +69,7 @@ function startGame() {
     $("#start").on("click", trigger);
 }
 
+// Create a function to set a timer for the game.
 function countdown() {
 
     if (seconds > 0) {
@@ -81,12 +80,14 @@ function countdown() {
     else stop();
 }
 
+// Create a function to create the quotes and answer choices for the user.
 function trivia() {
     for (i = 0; i < movieList.length; i++) {
 
         // Create divs for each of the quotes and answer choices.
         $("#content").append("<div id='Quote-" + i + "'>" + movieList[i].quote + "</div>");
 
+        // Create a for loop to go through answer choices for each quote.
         for (j = 0; j < movieList[i].choices.length; j++) {
             var key = movieList[i].choices[j];
             var correct;
@@ -98,6 +99,7 @@ function trivia() {
                 correct = "N";
             };
 
+            // Create buttons for each of the answer choices with the correct and incorrect answers as data attributes.
             $("#content").append("<button id='button' correct-answer='" + correct + "' data='q" + i + "' class='btn-sm q" + i + "'>" + key + "</button>");
 
         };
@@ -113,21 +115,28 @@ function trivia() {
         $(this).addClass("highlight");
     });
 }
+
 function verifyAnswers() {
 
+    // Check for all buttons that the user has selected.
     var userChoice = document.getElementsByClassName("highlight");
-
+    
+    // Using the data attribute, check to see if the selected answers are correct or incorrect.
     for (i = 0; i < userChoice.length; i++) {
-        
-        if (userChoice[i]) {
-            console.log(userChoice[i]);
-            userAnswers.push(userChoice[i].innerHTML);
-            console.log(userAnswers);
-        };
+        if (userChoice[i].getAttribute("correct-answer") === "Y") {
+            correctAnswers++;
+        }
+
+        else {
+            wrongAnswers++;
+        }
     }
 
+    // The number of unanswered questions will be the number of questions less the correct and incorrect answers.
+    unanswered = movieList.length - correctAnswers - wrongAnswers;
 }
 
+// Create a function to end the game and tally up points.
 function endGame() {
 
     $("#timer").empty();
