@@ -52,7 +52,7 @@ var movieList = [{
 var correctAnswers;
 var wrongAnswers;
 var unanswered;
-var seconds = 7;
+var seconds = 60;
 var startClock;
 var lock = true;
 
