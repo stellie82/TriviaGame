@@ -52,25 +52,24 @@ var movieList = [{
 var correctAnswers;
 var wrongAnswers;
 var unanswered;
-var userAnswers = [];
-var seconds = 10;
+var seconds = 20;
 var startClock;
-var checked = false;
 
 // Create a function to start the game.
 function startGame() {
     $("#timer").html(
         "<p>" + "You have one minute to guess the following movies based on their quotes.  To begin, press the start button.  Good luck!" + "</p>" +
-        "<button class='btn-lg'>" + "START" + "</button>");
+        "<button class='btn-lg' id='start'>" + "START" + "</button>");
 
     correctAnswers = 0;
     wrongAnswers = 0;
     unanswered = 0;
 
     // Create a trigger to start the timer as soon as the player clicks the start button.
-    $("#timer").on("click", trigger);
+    $("#start").on("click", trigger);
 }
 
+// Create a function to set a timer for the game.
 function countdown() {
 
     if (seconds > 0) {
@@ -81,15 +80,29 @@ function countdown() {
     else stop();
 }
 
+// Create a function to create the quotes and answer choices for the user.
 function trivia() {
     for (i = 0; i < movieList.length; i++) {
 
         // Create divs for each of the quotes and answer choices.
-        $("#content").append("<div id='Quote-" + (i + 1) + "'>" + movieList[i].quote + "</div>");
+        $("#content").append("<div id='Quote-" + i + "'>" + movieList[i].quote + "</div>");
 
-        $.each(movieList[i].choices, function (index, key) {
-            $('#content').append("<button id='button' data='q" + (i + 1) + "' class='btn-sm q" + (i + 1) + "'>" + key + "</button>");
-        });
+        // Create a for loop to go through answer choices for each quote.
+        for (j = 0; j < movieList[i].choices.length; j++) {
+            var key = movieList[i].choices[j];
+            var correct;
+            if (movieList[i].choices[j] === movieList[i].answer) {
+                correct = "Y";
+            }
+
+            else {
+                correct = "N";
+            };
+
+            // Create buttons for each of the answer choices with the correct and incorrect answers as data attributes.
+            $("#content").append("<button id='button' correct-answer='" + correct + "' data='q" + i + "' class='btn-sm q" + i + "'>" + key + "</button>");
+
+        };
 
         $("#content").append("<br></br>");
     }
@@ -102,27 +115,59 @@ function trivia() {
         $(this).addClass("highlight");
     });
 }
+
 function verifyAnswers() {
-    if ($("#button").hasClass("highlight")) {
-        userAnswers.push($(this).attr("data"));
-        console.log(userAnswers);
-    };
+
+    // Check for all buttons that the user has selected.
+    var userChoice = document.getElementsByClassName("highlight");
+    
+    // Using the data attribute, check to see if the selected answers are correct or incorrect.
+    for (i = 0; i < userChoice.length; i++) {
+        if (userChoice[i].getAttribute("correct-answer") === "Y") {
+            correctAnswers++;
+        }
+
+        else {
+            wrongAnswers++;
+        }
+    }
+
+    // The number of unanswered questions will be the number of questions less the correct and incorrect answers.
+    unanswered = movieList.length - correctAnswers - wrongAnswers;
 }
 
-    // Create a function to start the countdown and display the game contents.
-    function trigger() {
+// Create a function to end the game and tally up points.
+function endGame() {
 
-        // Set the clock to count down decrementing by one second at a time.
-        startClock = setInterval(countdown, 1000);
+    $("#timer").empty();
+    $("#content").empty();
+    $("#content").html(
+        "<p>" + "YOUR SCORE" + "</p>" +
+        "<p>" + "Correct Answers: " + correctAnswers + "</p>" +
+        "<p>" + "Incorrect Answers: " + wrongAnswers + "</p>" +
+        "<p>" + "Unanswered Questions: " + unanswered + "</p>"
 
-        countdown();
-        trivia();
-    }
+    );
+};
 
-    // Create a function to clear the timer.
-    function stop() {
-        clearInterval(startClock);
-        verifyAnswers();
-    }
 
-    $("document").ready(startGame);
+// Create a function to start the countdown and display the game contents.
+function trigger() {
+
+    // Set the clock to count down decrementing by one second at a time.
+    startClock = setInterval(countdown, 1000);
+
+    countdown();
+    trivia();
+}
+
+// Create a function to clear the timer.
+function stop() {
+    clearInterval(startClock);
+    verifyAnswers();
+    $("#content").append(
+        "<button class='btn-lg' id='done'>" + "DONE" + "</button>");
+    $("#done").on("click", endGame);
+}
+
+$("document").ready(startGame);
