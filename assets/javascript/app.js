@@ -52,8 +52,9 @@ var movieList = [{
 var correctAnswers;
 var wrongAnswers;
 var unanswered;
-var seconds = 60;
+var seconds = 7;
 var startClock;
+var lock = true;
 
 // Create a function to start the game.
 function startGame() {
@@ -78,10 +79,14 @@ function countdown() {
     }
 
     else stop();
+    lock = true;
+
 }
 
 // Create a function to create the quotes and answer choices for the user.
 function trivia() {
+
+    lock = false;
     for (i = 0; i < movieList.length; i++) {
 
         // Create divs for each of the quotes and answer choices.
@@ -114,13 +119,16 @@ function trivia() {
         $("." + q).removeClass("highlight");
         $(this).addClass("highlight");
     });
-}
+
+};
+
+
 
 function verifyAnswers() {
 
     // Check for all buttons that the user has selected.
     var userChoice = document.getElementsByClassName("highlight");
-    
+
     // Using the data attribute, check to see if the selected answers are correct or incorrect.
     for (i = 0; i < userChoice.length; i++) {
         if (userChoice[i].getAttribute("correct-answer") === "Y") {
@@ -150,6 +158,12 @@ function endGame() {
     );
 };
 
+// Create a function to prevent the user from selecting any answers after time has run out.
+function lockGame() {
+    if (lock === true) {
+        $(".btn-sm").off("click");
+    };
+}
 
 // Create a function to start the countdown and display the game contents.
 function trigger() {
@@ -163,6 +177,8 @@ function trigger() {
 
 // Create a function to clear the timer.
 function stop() {
+
+    lockGame();
     clearInterval(startClock);
     verifyAnswers();
     $("#content").append(
