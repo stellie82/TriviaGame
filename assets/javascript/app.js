@@ -52,7 +52,7 @@ var movieList = [{
 var correctAnswers;
 var wrongAnswers;
 var unanswered;
-var seconds = 20;
+var seconds = 60;
 var startClock;
 
 // Create a function to start the game.
